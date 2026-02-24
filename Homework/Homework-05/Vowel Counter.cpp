@@ -6,6 +6,7 @@ int main() {
     std::cout << "Enter an input, it can be a word or a sentence, press enter when you are ready to count the vowels: ";
     std::getline(std::cin, str);
 
+    //calculating the number of vowels in the input string
     int vowelCount = 0;
     for (char c : str) {
         if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
@@ -17,4 +18,5 @@ int main() {
     std::cout << "Number of vowels in your input is: " << vowelCount << std::endl;
 
     return 0;
+
 }
