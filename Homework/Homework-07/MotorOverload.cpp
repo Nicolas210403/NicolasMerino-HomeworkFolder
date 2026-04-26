@@ -66,16 +66,17 @@ bool turnOff(uint8_t guess) {
         // 4) If incorrect guess: call updateOverheating() to add one more overheating motor.
         // 5) Return true ONLY if correct guess.
 
-        motorState ^= (overheatingMotors & guess);
-
-        updateOverheating();
-        displayStatus();
-        updateOverheating();
-        displayStatus();
-        return false;
-    }
+        uint8_t validTurnOff = overheatingMotors & guess;
+            motorState &= ~validTurnOff;
+            if (guess == overheatingMotors) {
+                return true;
+            } else {
+                updateOverheating();
+                displayStatus();
+                return false;
+            }
+        }
 };
-
 
 int  checkInput(const std::string& s) {
     int value = 0;
@@ -106,22 +107,27 @@ int  checkInput(const std::string& s) {
         return -1;
 }
 
-
+// I am not sure how to allow the user to use bitwise operators for the guess input.
 int main() {
     MotorStatus motorStatus;
-    uint8_t guess = 0;
+    std::string s;
     std::cout << "Motor Meltdown\n";
     std::cout << "Enter your guess as:\n";
-    std::cout << "  - 8-bit binary (e.g., 00101000)\n";
-    std::cout << "  - hex (e.g., 0x28)\n";
+    std::cout << " - 8-bit binary (e.g., 00101000)\n";
+    std::cout << " - hex (e.g., 0x28)\n";
     std::cout << "Type 'q' to quit.\n\n";
-    std::cout << "Your guess: ";
-    std::string s;
-    std::cin >> s;
+    std::cout << "Your guess: \n\n";
 
-    if (!std::cin) return 0;
-    if (s == "q" || s == "Q") return 0;
+    while (true) {
+        std::cin >> s;
+        int guess = checkInput(s);
+        if (guess != -1) {
+            if (motorStatus.turnOff(static_cast<uint8_t>(guess))) {
+                std::cout << "Congratulations! You turned off all overheating motors!\n";
+                break;
+            }
+        }
+    }
 
-    while(checkInput(s)!=-1) {return 0;}
-        
+    return 0;
 }
