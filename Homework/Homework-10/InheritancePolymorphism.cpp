@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+// NOTE: When testing final changes to my main function my exe file was deleted and I could not run the code.
 class Pokemon {
 protected:
     std::string name;
