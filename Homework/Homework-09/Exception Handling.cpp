@@ -22,7 +22,7 @@ double divide(int numerator, int denominator) {
 
 int accessArray(int arr[], int size, int index) {
     if (index < 0 || index >= size) {
-        throw std::out_of_range("Index out of bounds.");
+        throw std::out_of_range("Index out is of bounds.");
     }
     return arr[index];
 }
