@@ -73,7 +73,6 @@ int main() {
     std::vector<int> safeArray(size > 0 ? size : 1, 0);
 
     try {
-        // Pass internal contiguous storage array data cleanly without using raw pointer variables
         int value = accessArray(safeArray.data(), size, index);
         std::cout << "Value: " << value << std::endl;
     } catch (const std::out_of_range& e) {
